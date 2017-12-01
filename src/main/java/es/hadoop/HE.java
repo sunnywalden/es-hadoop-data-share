@@ -1,17 +1,15 @@
 package es.hadoop;
 
+import com.hadoop.mapreduce.LzoTextInputFormat;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
-import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
-
+import org.apache.hadoop.util.GenericOptionsParser;
 import org.elasticsearch.hadoop.mr.EsOutputFormat;
-import org.elasticsearch.hadoop.mr.LinkedMapWritable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,72 +17,70 @@ import java.io.IOException;
 
 
 public class HE {
-    private static Logger LOG = LoggerFactory.getLogger(HE.class);
-    public class HeMapper extends Mapper<Writable, Text, NullWritable, LinkedMapWritable> {
-        @Override
-        protected void map(Writable key, Text value, org.apache.hadoop.mapreduce.Mapper.Context context)
-                throws IOException, InterruptedException {
-            LinkedMapWritable doc = new LinkedMapWritable();
-            context.write(NullWritable.get(), doc);
-        }
-    }
-
-
+    private static Logger LOG = LoggerFactory.getLogger ( HE.class );
 
 
     public static void main(String[] args) {
         try {
-            if (args.length != 3) {
-                System.out.println("Usage: MaxTemperature <es.nodes> <es.resource> <input path>");
-                System.exit(-1);
-            }
-
-            long start_time = System.currentTimeMillis();
-
-            Configuration conf = new Configuration();
-
-//            String[] oArgs = new GenericOptionsParser(conf , args).getRemainingArgs();
-//
-//
-//
-//
-//
-//            if (oArgs.length != 1) {
-//                LOG.error("error,Usage: MaxTemperature <es.nodes> <es.resource> <input path>\"");
-//                System.exit(2);
+//            if (args.length != 3) {
+//                System.out.println("Usage: MaxTemperature <es.nodes> <es.resource> <input path>");
+//                System.exit(-1);
 //            }
 
-            conf.setBoolean("mapred.map.tasks.speculative.execution", false);
-            conf.setBoolean("mapred.reduce.tasks.speculative.execution", false);
-            conf.set("es.input.json", "yes");
+            long start_time = System.currentTimeMillis ( );
 
-            conf.set("es.nodes", args[0]);
-            conf.set("es.resource", args[1]);
+            Configuration conf = new Configuration ( );
 
-            conf.setBoolean("mapreduce.map.output.compress", true);
-            conf.set("mapreduce.map.output.compress.codec", "com.hadoop.compression.lzo.LzoCodec");
+            String[] oArgs = new GenericOptionsParser ( conf , args ).getRemainingArgs ( );
 
 
-            Job job = Job.getInstance(conf, "hadoop to elasticsearch");
+            if ( oArgs.length != 3 ) {
+                LOG.error ( "error,Usage: MaxTemperature <es.nodes> <es.resource> <input path>\"" );
+                System.exit ( 2 );
+            }
 
-//            job.setJarByClass(HE.class);
-            job.setMapperClass(HeMapper.class);
+            conf.setBoolean ( "mapred.map.tasks.speculative.execution" , false );
+            conf.setBoolean ( "mapred.reduce.tasks.speculative.execution" , false );
+            conf.set ( "es.input.json" , "yes" );
 
-//        job.setInputFormatClass(LzoTextInputFormat.class);
-            job.setInputFormatClass(TextInputFormat.class);
-            job.setOutputFormatClass(EsOutputFormat.class);
+            conf.set ( "es.nodes" , oArgs[ 0 ] );
+            conf.set ( "es.resource" , oArgs[ 1 ] );
 
-            job.setMapOutputKeyClass(NullWritable.class);
-            job.setMapOutputValueClass(LinkedMapWritable.class);
+            conf.setBoolean ( "mapreduce.map.output.compress" , true );
+            conf.set ( "mapreduce.map.output.compress.codec" , "com.hadoop.compression.lzo.LzoCodec" );
+
+
+            Job job = Job.getInstance ( conf , "hadoop to elasticsearch" );
+
+            job.setJarByClass(HE.class);
+            job.setMapperClass ( HeMapper.class );
+
+            job.setInputFormatClass ( LzoTextInputFormat.class );
+//            job.setInputFormatClass(TextInputFormat.class);
+            job.setOutputFormatClass ( EsOutputFormat.class );
+
+            job.setMapOutputKeyClass ( NullWritable.class );
+            job.setMapOutputValueClass ( Text.class );
 
 
             // 设置输入路径
-            FileInputFormat.setInputPaths(job, new Path(args[2]));
-            System.out.println(job.waitForCompletion(true));
+            FileInputFormat.setInputPaths ( job , new Path ( oArgs[ 2 ] ) );
+            System.out.println ( job.waitForCompletion ( true ) );
 
-            System.out.println(System.currentTimeMillis() - start_time);
+            System.out.println ( System.currentTimeMillis ( ) - start_time );
         } catch (Exception e) {
-            LOG.error(e.getMessage(), e);
+            LOG.error ( e.getMessage ( ) , e );
+        }
+    }
+
+    public static class HeMapper
+            extends Mapper <Object, Text, NullWritable, Text> {
+        @Override
+        public void map(Object key , Text value , Context context)
+                throws IOException, InterruptedException {
+//            byte[] source = value.toString().trim().getBytes();
+//            BytesWritable jsonDoc = new BytesWritable(source);
+            context.write ( NullWritable.get ( ) , value );
         }
     }
 }

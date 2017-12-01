@@ -6,17 +6,17 @@
 
     <groupId>es</groupId>
     <artifactId>hadoop</artifactId>
-    <version>1.2.5</version>
+    <version>1.2.6</version>
     <packaging>jar</packaging>
     <name>es-hadoop-data-share</name>
-    <description>share data between es and hadoop (SunnyWalden)</description>
+    <description>share data between es and hadoop (SunnyWalden)-Hadoop to Elasticsesrch</description>
     <url>http://maven.apache.org</url>
 
     <repositories>
         <!--<repository>-->
-            <!--<id>twttr</id>-->
-            <!--<name>twttr maven</name>-->
-            <!--<url>http://maven.twttr.com/</url>-->
+        <!--<id>twttr</id>-->
+        <!--<name>twttr maven</name>-->
+        <!--<url>http://maven.twttr.com/</url>-->
         <!--</repository>-->
 
         <repository>
@@ -34,34 +34,34 @@
             <id>UK</id>
             <name>UK Central</name>
             <url>http://uk.maven.org/maven2</url>
-            
+
         </repository>
 
         <repository>
             <id>sonatype</id>
             <name>sonatype Central</name>
             <url>http://repository.sonatype.org/content/groups/public/</url>
-            
+
         </repository>
 
         <repository>
             <id>jboss-public-repository-group</id>
             <name>JBoss Public Repository Group</name>
             <url>http://repository.jboss.org/nexus/content/groups/public</url>
-            
+
         </repository>
 
         <!--<repository>-->
-            <!--<id>maven-repo</id>-->
-            <!--<url>http://central.maven.org/maven2/</url>-->
-            <!--<releases>-->
-                <!--<enabled>true</enabled>-->
-            <!--</releases>-->
-            <!--<snapshots>-->
-                <!--<enabled>true</enabled>-->
-                <!--<updatePolicy>always</updatePolicy>-->
-                <!--<checksumPolicy>fail</checksumPolicy>-->
-            <!--</snapshots>-->
+        <!--<id>maven-repo</id>-->
+        <!--<url>http://central.maven.org/maven2/</url>-->
+        <!--<releases>-->
+        <!--<enabled>true</enabled>-->
+        <!--</releases>-->
+        <!--<snapshots>-->
+        <!--<enabled>true</enabled>-->
+        <!--<updatePolicy>always</updatePolicy>-->
+        <!--<checksumPolicy>fail</checksumPolicy>-->
+        <!--</snapshots>-->
         <!--</repository>-->
     </repositories>
 
@@ -164,12 +164,94 @@
             <artifactId>hadoop-lzo</artifactId>
             <version>0.4.21-SNAPSHOT</version>
             <scope>system</scope>
-            <systemPath>C:\Users\Administrator\.m2\repository\com\hadoop\gplcompression\0.4.21-SNAPSHOT\hadoop-lzo-0.4.21-SNAPSHOT.jar</systemPath>
+            <systemPath>
+                C:\Users\Administrator\.m2\repository\com\hadoop\gplcompression\0.4.21-SNAPSHOT\hadoop-lzo-0.4.21-SNAPSHOT.jar
+            </systemPath>
         </dependency>
     </dependencies>
 
-    <build>
+    <!--<build>-->
 
+    <!--<plugins>-->
+    <!--<plugin>-->
+    <!--<groupId>org.apache.maven.plugins</groupId>-->
+    <!--<artifactId>maven-jar-plugin</artifactId>-->
+    <!--<version>3.0.2</version>-->
+    <!--<configuration>-->
+    <!--<archive>-->
+    <!--<manifest>-->
+    <!--<addClasspath>true</addClasspath>-->
+    <!--<classpathPrefix>lib/</classpathPrefix>-->
+    <!--<mainClass>es.hadoop.EH</mainClass>-->
+    <!--</manifest>-->
+    <!--</archive>-->
+    <!--</configuration>-->
+    <!--</plugin>-->
+
+    <!--<plugin>-->
+    <!--<groupId>org.apache.maven.plugins</groupId>-->
+    <!--<artifactId>maven-compiler-plugin</artifactId>-->
+    <!--<version>3.7.0</version>-->
+    <!--<configuration>-->
+    <!--<source>1.8</source>-->
+    <!--<target>1.8</target>-->
+    <!--</configuration>-->
+    <!--</plugin>-->
+
+
+    <!--<plugin>-->
+    <!--<groupId>org.apache.maven.plugins</groupId>-->
+    <!--<artifactId>maven-assembly-plugin</artifactId>-->
+    <!--<version>2.6</version>-->
+    <!--<configuration>-->
+    <!--&lt;!&ndash;-->
+    <!--<skipTests>true</skipTests>-->
+    <!--&ndash;&gt;-->
+    <!--<descriptorRefs>-->
+    <!--<descriptorRef>jar-with-dependencies</descriptorRef>-->
+    <!--</descriptorRefs>-->
+    <!--<archive>-->
+    <!--<manifest>-->
+    <!--<addClasspath>false</addClasspath>-->
+    <!--<mainClass>es.hadoop.EH</mainClass>-->
+    <!--</manifest>-->
+    <!--</archive>-->
+    <!--</configuration>-->
+    <!--<executions>-->
+    <!--<execution>-->
+    <!--<id>make-assembly</id>-->
+    <!--<phase>package</phase>-->
+    <!--<goals>-->
+    <!--<goal>assembly</goal>-->
+    <!--</goals>-->
+    <!--</execution>-->
+    <!--</executions>-->
+    <!--</plugin>-->
+
+
+    <!--<plugin>-->
+    <!--<groupId>org.apache.maven.plugins</groupId>-->
+    <!--<artifactId>maven-dependency-plugin</artifactId>-->
+    <!--<executions>-->
+    <!--<execution>-->
+    <!--<id>copy-dependencies</id>-->
+    <!--<phase>package</phase>-->
+    <!--<goals>-->
+    <!--<goal>copy-dependencies</goal>-->
+    <!--</goals>-->
+    <!--<configuration>-->
+    <!--<outputDirectory>${project.build.directory}/lib</outputDirectory>-->
+    <!--<overWriteReleases>false</overWriteReleases>-->
+    <!--<overWriteSnapshots>false</overWriteSnapshots>-->
+    <!--<overWriteIfNewer>true</overWriteIfNewer>-->
+    <!--</configuration>-->
+    <!--</execution>-->
+    <!--</executions>-->
+    <!--</plugin>-->
+    <!--</plugins>-->
+    <!--<defaultGoal>compile</defaultGoal>-->
+    <!--</build>-->
+    <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -178,61 +260,20 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <addClasspath>false</addClasspath>
+                            <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>es.hadoop.HE</mainClass>
+                            <mainClass>es.hadoop.EH</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.7.0</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.6</version>
-                <configuration>
-                    <!--
-                    <skipTests>true</skipTests>
-                    -->
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                    <archive>
-                        <manifest>
-                            <addClasspath>false</addClasspath>
-                            <mainClass>es.hadoop.HE</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>make-assembly</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>assembly</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
                     <execution>
                         <id>copy-dependencies</id>
-                        <phase>package</phase>
+                        <phase>prepare-package</phase>
                         <goals>
                             <goal>copy-dependencies</goal>
                         </goals>
@@ -241,12 +282,12 @@
                             <overWriteReleases>false</overWriteReleases>
                             <overWriteSnapshots>false</overWriteSnapshots>
                             <overWriteIfNewer>true</overWriteIfNewer>
+                            <excludeScope>provided</excludeScope>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
-        <defaultGoal>compile</defaultGoal>
     </build>
 
 </project>
