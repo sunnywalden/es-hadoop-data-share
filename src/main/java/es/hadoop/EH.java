@@ -79,7 +79,7 @@ public class EH {
             // 使用lzo分布式索引生成器
             DistributedLzoIndexer lzoIndexer = new DistributedLzoIndexer ( );
             lzoIndexer.setConf ( conf );
-            lzoIndexer.run ( new String[] { args[ 3 ] } );
+            lzoIndexer.run ( new String[] { oArgs[ 3 ] } );
 
 
             System.out.println ( System.currentTimeMillis ( ) - start_time );

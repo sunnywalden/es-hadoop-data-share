@@ -39,6 +39,10 @@ public class HE {
                 System.exit ( 2 );
             }
 
+            conf.set("fs.defaultFS", "hdfs://47.100.76.107:9000");
+//设置RN的主机
+            conf.set("yarn.resourcemanager.hostname", "47.100.76.107");
+
             conf.setBoolean ( "mapred.map.tasks.speculative.execution" , false );
             conf.setBoolean ( "mapred.reduce.tasks.speculative.execution" , false );
             conf.set ( "es.input.json" , "yes" );

@@ -262,7 +262,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>es.hadoop.EH</mainClass>
+                            <mainClass>es.hadoop.HE</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
