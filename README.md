@@ -1,4 +1,8 @@
-# es-hadoop-data-share
+# es-hadoop-data-share based on hadoop 2.7.4 
+env describe:
+ELK version: 5.6.0
+ES-Hadoop version: 5.6.0
+MR version: 2
 
 
 app name: es-hadoop-data-share
