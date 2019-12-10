@@ -33,12 +33,16 @@ fell free to enjoy with it
 
 usage example:
 
-    1st,wrting data that searched from ES to Hadoop 
+### ES2Hadoop
+
+1st,wrting data that searched from ES to Hadoop 
     
         hadoop jar hadoop-1.2.6.jar 106.14.240.250:9200 es.hadoop.EH logstash-11011555/logs "*"  
         
         hdfs://47.100.76.107:9000/es_output/12011725
         
+### Hadoop2ES
+
     2rd,wrting data that read from Hadoop to ES
     
         hadoop jar  hadoop-1.2.6.jar es.hadoop.HE 106.14.240.250:9200 logstash-11011555/logs  
