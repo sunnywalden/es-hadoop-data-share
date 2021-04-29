@@ -1,0 +1,15 @@
+version: 2
+updates:
+- package-ecosystem: maven
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "21:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: org.elasticsearch:elasticsearch-hadoop
+    versions:
+    - 7.11.0
+    - 7.11.1
+    - 7.11.2
+    - 7.12.0
